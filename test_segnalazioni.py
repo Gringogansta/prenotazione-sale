@@ -4,6 +4,8 @@ import unittest
 from datetime import date
 
 from prenotazioni import Agenda, Prenotazione, Sala
+
+
 class TestSegnalazioni(unittest.TestCase):
     def test_prenotazioni_contigue(self):
         # Preparazione
@@ -23,5 +25,23 @@ class TestSegnalazioni(unittest.TestCase):
 
         # Verifica
         self.assertEqual(risultato, 2)
+
+    def test_capienza_esatta(self):
+        # Preparazione
+        agenda = Agenda()
+        agenda.aggiungi_sala(Sala("A2", "Aula 2", 10))
+
+        oggi = date(2026, 11, 2)
+        giorno = date(2026, 11, 3)
+
+        prenotazione = Prenotazione("A2", giorno, "09:00", "10:00", "Rossi", 10)
+
+        # Azione
+        risultato = agenda.prenota(prenotazione, oggi=oggi)
+
+        # Verifica
+        self.assertEqual(risultato, 1)
+
+
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main()  
